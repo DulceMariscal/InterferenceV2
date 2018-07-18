@@ -1,0 +1,20 @@
+SLA_A1_1  =  0.09119  +  -0.26248 * STD_PERC_VAR
+Goodness of fit: p-val = 0.0031549
+Regressor's significance: p-vals = 0.0031549
+
+SLA_A1_1to5  =  0.10275  +  -0.21704 * STD_PERC_VAR
+Goodness of fit: p-val = 0.0043647
+Regressor's significance: p-vals = 0.0043647
+
+SLA_A1_6to30  =  0.11982
+Goodness of fit: p-val = NaN
+Regressor's significance: p-vals = 
+
+SLA_A1_L30  =  -0.031837  +  0.0016916 * Age  +  -1.1807 * STD_DIFF
+Goodness of fit: p-val = 0.0025958
+Regressor's significance: p-vals = 0.023064   0.0049918
+
+stridesToAVGpert  =  8.25
+Goodness of fit: p-val = NaN
+Regressor's significance: p-vals = 
+

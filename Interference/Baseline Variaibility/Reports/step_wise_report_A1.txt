@@ -1,0 +1,30 @@
+SLA_A1_1  =  1.326  +  -0.0096648 * Height
+Model p-val = 0.010039
+Regressors p-vals = 0.010039
+Model p-val-adj. Mean: 0.06818. se = 0.00065613. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_A1_1to5  =  1.3287  +  -0.0095153 * Height
+Model p-val = 0.011474
+Regressors p-vals = 0.011474
+Model p-val-adj. Mean: 0.075145. se = 0.00061158. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_A1_6to30  =  -0.21946
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: 0.075145. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_A1_L30  =  0.34634  +  -0.0022044 * Height
+Model p-val = 0.018709
+Regressors p-vals = 0.018709
+Model p-val-adj. Mean: 0.10276. se = 0.0006092. Significant = NO
+NPERMS = 10000. NREP = 20
+
+stridesToAVGpert  =  66.0625
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: 0.10276. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+

@@ -1,0 +1,72 @@
+SLA_DIFF_1  =  0.09119  +  -0.26248 * STD_PERC_VAR
+Model p-val = 0.0031549
+Regressors p-vals = 0.0031549
+Model p-val-adj. Mean: 0.041415. se = 0.00051887. Significant = YES
+NPERMS = 10000. NREP = 20
+
+SLA_DIFF_1to5  =  0.10275  +  -0.21704 * STD_PERC_VAR
+Model p-val = 0.0043647
+Regressors p-vals = 0.0043647
+Model p-val-adj. Mean: 0.05292. se = 0.00043556. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_DIFF_6to30  =  0.11982
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: NaN. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_DIFF_L30  =  -0.031837  +  0.0016916 * Age  +  -1.1807 * STD_DIFF
+Model p-val = 0.0025958
+Regressors p-vals = 0.023064   0.0049918
+Model p-val-adj. Mean: 0.03369. se = 0.00054724. Significant = YES
+NPERMS = 10000. NREP = 20
+
+stridesToAVGpert  =  8.25
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: NaN. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+
+%-------------------------------------------------------------------------
+
+SLA_PV_1  =  0.2137  +  -0.76669 * STD_PERC_VAR
+Model p-val = 0.00027706
+Regressors p-vals = 0.00027706
+Model p-val-adj. Mean: 0.006395. se = 0.00016835. Significant = YES
+NPERMS = 10000. NREP = 20
+
+%Even controlling for SLA_A1_1, there is a significant association between
+the two variables. The more you increase the variance during baseline, the
+less you will improve (or the worse you will be the second time compared to
+the first).
+It is NOT true that subjects that were perturbed more, were also those that
+showed a stronger improvement.
+
+%-------------------------------------------------------------------------
+
+
+SLA_PV_1to5  =  0.2822  +  -0.66934 * STD_PERC_VAR
+Model p-val = 0.001054
+Regressors p-vals = 0.001054
+Model p-val-adj. Mean: 0.020035. se = 0.00037699. Significant = YES
+NPERMS = 10000. NREP = 20
+
+SLA_PV_6to30  =  0.5198
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: NaN. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+
+SLA_PV_L30  =  5.2642
+Model p-val = NaN
+Regressors p-vals = 
+Model p-val-adj. Mean: NaN. se = NaN. Significant = NO
+NPERMS = 10000. NREP = 20
+
+stridesToAVGpert_PV  =  -5.7987  +  278.7952 * STD_IN
+Model p-val = 0.0073284
+Regressors p-vals = 0.0073284
+Model p-val-adj. Mean: 0.11684. se = 0.00083371. Significant = NO
+NPERMS = 10000. NREP = 20
+

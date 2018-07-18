@@ -1,0 +1,20 @@
+SLA_A1_1  =  0.091316  +  -0.0014949 * Height X STD_PERC_VAR
+Goodness of fit: p-val = 0.003049. Adjusted p-val = 0.0965
+Regressor's significance: p-vals = 0.003049
+
+SLA_A1_1to5  =  0.10275  +  -0.21704 * STD_PERC_VAR
+Goodness of fit: p-val = 0.0043647. Adjusted p-val = 0.1213
+Regressor's significance: p-vals = 0.0043647
+
+SLA_A1_6to30  =  0.11982
+Goodness of fit: p-val = NaN. Adjusted p-val = 0
+Regressor's significance: p-vals = 
+
+SLA_A1_L30  =  -0.021393  +  0.062928 * Age X STD_IN
+Goodness of fit: p-val = 0.00042672. Adjusted p-val = 0.0239
+Regressor's significance: p-vals = 0.00042672
+
+stridesToAVGpert  =  -135.7117  +  227.5566 * BMI X STD_IN
+Goodness of fit: p-val = 0.039729. Adjusted p-val = 0.4306
+Regressor's significance: p-vals = 0.039729
+

@@ -1,0 +1,20 @@
+SLA_A1_1  =  0.90055  +  -0.008843 * Height  +  15.4741 * STD_FIN
+Goodness of fit: p-val = 0.0017072
+Regressor's significance: p-vals = 0.0053999    0.013165
+
+SLA_A1_1to5  =  0.93383  +  -0.0087527 * Height  +  14.3601 * STD_FIN
+Goodness of fit: p-val = 0.0034693
+Regressor's significance: p-vals = 0.0080085    0.025375
+
+SLA_A1_6to30  =  -0.21946
+Goodness of fit: p-val = NaN
+Regressor's significance: p-vals = 
+
+SLA_A1_L30  =  0.34634  +  -0.0022044 * Height
+Goodness of fit: p-val = 0.018709
+Regressor's significance: p-vals = 0.018709
+
+stridesToAVGpert  =  66.0625
+Goodness of fit: p-val = NaN
+Regressor's significance: p-vals = 
+
