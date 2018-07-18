@@ -1,0 +1,101 @@
+function     plot_data_and_fit_all_curves2(all_curves, fits, ...
+    parDim4 , NamesDim4,...
+    selContr,...
+    namesSingleCurve, valSingleCurve,...
+    namesCoupleCurve, valCoupleCurve)
+
+%% parDim4
+%is the name of the parameter of dim4 (eg: 'smoothing')
+%% NameDim4
+%is the list of names in dim4 (eg: "exp_fit","double_exp",..)
+
+%% selContr
+%is the name of the contribution that is being printed (eg: "SLA")
+
+%% namesSingleCurve
+%Names of parameters to be printed for each curve (eg tau, R2)
+%% valSingleCurve,...
+%Matrix containing corresponding parameters (eg tau values)
+
+%% namesCoupleCurve
+%Number of parameters to be printed for each couple of curves (ie for each subject) (eg PV)
+%% valCoupleCurve
+%Matrix containing corresponding parameters (eg PV values)
+
+
+
+
+
+nPrintSingleCurve = length(namesSingleCurve);
+nPrintCoupleCurve = length(namesCoupleCurve);
+ntotPars = 2*nPrintSingleCurve + nPrintCoupleCurve; %Total number of parameters to be printed for each subject
+%% TODO:
+% Generalize to make it able to plot every parameter you want for each subject!
+
+%fitMeas contains R2, R2adj, RMSE
+%indFitMeas is the mask of the fitmeas to print
+
+[ng,ns,nc,nsm] = size(fits); %GROUP X SUBS X COND
+
+groups={'Interference','Savings'};
+margins=[0.05 0.03];
+SS=15;
+fontSize = 12;
+myGroupColors=[0.8500    0.3250    0.0980; 0    0.4470    0.7410]; %Interference, Savings
+% myColors=[0 0 0; 0 0 0]; %Interference, Savings
+myStylesFit={'-','--'}; % A1 solid, A2 dashed
+myStylesData={'o','*'};  % A1 circles, A2 squares
+h0=0.05;
+D=0.05;
+x0=0.15;
+heights  = fliplr([h0:D:(ntotPars-1)*D + h0]); %Heigths at which to plot the parameters
+parNames = buildParNames(namesSingleCurve, namesCoupleCurve);
+for sm=1:nsm
+    figureName = ['Contribution:' selContr ' - ' parDim4 ': ' NamesDim4{sm}];
+    figure('Name', figureName,'NumberTitle','off');
+    
+    for gr=1:ng
+        for sub=1:ns
+            
+            for cond=1:nc
+                
+                data = all_curves{gr,sub,cond};
+                indSS = 1:SS:length(data);
+                sdata = fits{gr, sub, cond, sm};
+                subplot_tight(ng, ns, sub + (gr-1)*ns,margins)
+                hold on
+                plot(indSS,data(indSS),[myStylesData{cond}],'Color',myGroupColors(gr,:),'LineWidth',1);
+                hold on
+                fitH = plot(sdata,'Color',myGroupColors(gr,:),'LineStyle',myStylesFit{cond},'LineWidth',3);
+                xlim([0 600])
+                uistack(fitH, 'top')
+                hold on
+            end
+            
+            % Extract and stack all parameters related to current subject
+            subjPars = stackSingleSubjectData(valSingleCurve, valCoupleCurve, gr, sub, sm, nPrintSingleCurve, nPrintCoupleCurve);
+            
+            % Print all parameters
+            for psc=1:ntotPars
+                text(x0, heights(psc),[parNames{psc} num2str(subjPars(psc),'%.3f')],'Units','Normalized','FontSize',fontSize)
+            end
+            
+            if sub==1 && gr==1
+                legend('Data A1','Sm A1','Data A2','Sm A2')
+            end
+            
+            if sub==1
+                ylabel([groups{gr}]);
+            end
+        end
+    end
+    %    set(gcf,'name',);
+    
+end
+
+end
+
+
+
+
+
