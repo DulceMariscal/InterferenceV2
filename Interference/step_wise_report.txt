@@ -1,0 +1,4 @@
+SLA_A1_1  =  0.09119  +  -0.26248 * Age
+Goodness of fit: p-val = 0.0031549
+Regressor's significance: p-vals = 0.0031549
+
