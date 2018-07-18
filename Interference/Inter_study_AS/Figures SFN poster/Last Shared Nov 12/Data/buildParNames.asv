@@ -1,0 +1,17 @@
+function parNames = buildParNames(p1, p2)
+
+n1 = legnth(p1);
+n2 = length(p2);
+parNames = cell(1, 2*n1 + n2);
+
+for i=1
+   parnames 
+end
+
+
+for i = 1:n1
+   parNames{i}    = [p1{i} '(A1): ']; 
+   parNames{i + } = [p1{i} '(A2): '];
+end
+    
+end
