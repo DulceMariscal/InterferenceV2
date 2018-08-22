@@ -80,13 +80,13 @@ for exp = 1:nexps
         case 30
             x = SSIM_evolve_lisu_5s_DM(k, cinput , x0); %Linear summation 5 states
         case 31
-            x = SSIM_evolve_lisu_4s_DM(k, cinput , x0); %Linear summation 5 states
+            x = SSIM_evolve_lisu_4s_GTO(k, cinput , x0); %Linear summation 5 states
         case 32
             x = SSIM_evolve_lisu_3s(k, input , x0); %%Linear summation 3 states
         case 33
-            x = SSIM_evolve_lisu_4s(k, input , x0); %Linear summation 5 states
+            x = SSIM_evolve_lisu_4s_GTO_fixparams(k, input , x0); %Linear summation 5 states
         case 34
-            x = SSIM_evolve_lisu_4s_body(k, input , x0); %Linear summation 5 states
+            x = SSIM_evolve_lisu_4s_body_GTO_fixparams(k, input , x0); %Linear summation 5 states
         case 35
             x = SSIM_evolve_lisu_4s_DMV2(k, cinput , x0); %Linear summation 5 states
         case 36

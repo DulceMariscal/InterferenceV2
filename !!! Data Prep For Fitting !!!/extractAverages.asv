@@ -1,5 +1,5 @@
 clc
-% close all
+close all
 clear all
 
 %% Parameters
@@ -16,7 +16,7 @@ charGroups = {'I','S'};
 % params={'spatialContributionNorm2','stepTimeContributionNorm2',clc'velocityContributionNorm2','stepLengthAsym'};
 % params={'spatialContributionNorm2','stepTimeContributionNorm2','velocityContributionNorm2','netContributionNorm2'};
 params={'spatialContributionPNorm','stepTimeContributionPNorm','velocityContributionPNorm','netContributionPNorm'};
-gaitPar=params{3};
+gaitPar=params{4};
 % gaitPar = 'stepLengthAsym';
 wSize = 5;
 % woSizes = zeros(groups,subs);
@@ -111,10 +111,10 @@ for gr = 1:groups
                 firstSamples = cc(1:wSize-1);
 %                 cc= movmedian(cc,wSize);
                 cc(badstrides)=nan;
-%                 cc = tsmovavg(cc,'s',wSize,1);
+                cc = tsmovavg(cc,'s',wSize,1);
 %                 cc= movmean(cc,wSize,'omitnan');
                 cc(1:wSize-1) = firstSamples;
-                cc(badstrides)=nan;
+%                 cc(badstrides)=nan;
                    
             end
             

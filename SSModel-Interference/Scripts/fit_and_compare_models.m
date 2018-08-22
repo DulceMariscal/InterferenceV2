@@ -20,11 +20,12 @@ if NORMPERT==0
     %load([pathToData '\ExtAdaptPNormShif_A1_B_A2NormAll.mat'])
     %load([pathToData '\ExtAdaptShiftedDataToFitALL.mat'])
     %load([pathToData '\ExtAdaptShiftedREmovingStridesDataToFit.mat'])
-    %load([pathToData '\ExtAdaptShiftedDataToFit.mat'])
+    %load([pathToData '\ExtAdaptShiftedDataToFit.mat'])clos
     %load([pathToData '\DataForFitting.mat'])
     %     load([pathToData '\ExtAdaptDataToFitV9.mat'])
-%     load([pathToData '\ExtAdaptDataToFitV8ALLDataCropped.mat'])
-       load([pathToData '\ExtAdapt_ToFitV9nan.mat'])
+%     load([pathToData '\ExtAdaptDataToFitV8ALLDataCroppedV2.mat'])
+%        load([pathToData '\ExtAdapt_ToFitV9nan.mat'])
+load([pathToData '\ExtAdapt_V8ALL_nan.mat'])
     %load([pathToData '\ExtAdaptShiftedDataToFitv5.mat'])
 else
     %load([pathToData '\Data\DataForFittingNormPert.mat'])
@@ -85,9 +86,11 @@ transitions = [154 756 2104 2707];
 % modelsToCompare = [2 13 15];
 % modelsToCompare = [1 2 3];
 %modelsToCompare = [21 7 3];
-% modelsToCompare = [31 30 21];
-modelsToCompare = [21 31 35];
-
+% modelsToCompare = [21 30 31  ];
+% modelsToCompare = [35 33 24];
+% modelsToCompare =[21 30 35 33];
+modelsToCompare =[32 33 34 35]; %Gely's vs Dulce 4s
+modelsToCompare =[35 33 30 21]; 
 % modelsToCompare = [1 2 7];
 %% -------------------------------------------------------------------------
 
@@ -152,14 +155,14 @@ end
 
 %% Plot whole eperiment results for each group
 f1 = figure('Name','Data + Fits','NumberTitle','off');
-M1=[1 2; 3 4; 5 6];
+M1=[1 2; 3 4; 5 6; 7 8];
 
 for imod=1:nmods
     model = modelsToCompare(imod);
     
     Coord = modParams(model).zcoord;
     for gr=1:ng
-        subplot(3,2,M1(imod,gr))
+        subplot(nmods,2,M1(imod,gr))
         % Data
         plot(adaptations(gr,:),'ko'); hold on;
         
@@ -184,11 +187,12 @@ end
 
 %% Plot whole experiment results for each experiment (overlapping groups)
 f2 = figure('Name','Fits - Groups contrasts','NumberTitle','off');
-M1=[1 2; 3 4; 5 6];
+% M1=[1 2; 3 4; 5 6];
 for imod=1:nmods
     model = modelsToCompare(imod);
     Coord = modParams(model).zcoord;
-    subplot(3,1,imod)
+%      subplot(3,1,imod)
+    subplot(length( modelsToCompare),1,imod)
     for gr=1:ng
         % Fit
         hold on
@@ -212,7 +216,7 @@ end
 stridesToSkip =1 ; %These strides will be removed to compute percent variations
 f3 = figure('Name',['A1 vs A2 contrasts - Strides Removed For PV : ' num2str(stridesToSkip)  ],...
     'NumberTitle','off');
-M2 = [1 2 3; 4 5 6; 7 8 9] ;
+M2 = [1 2 3; 4 5 6; 7 8 9; 10 11 12] ;
 htop = zeros(1,2);
 for imod=1:nmods
     model = modelsToCompare(imod);
@@ -369,14 +373,14 @@ end
 % Plot whole eperiment results for each group with individual states
 
 f5 = figure('Name','Data + Fits + States','NumberTitle','off');
-M1=[1 2; 3 4; 5 6];
+% M1=[1 2; 3 4; 5 6; 7 8];
 for imod=1:nmods
     model = modelsToCompare(imod);
     Coord = modParams(model).zcoord;
     for gr=1:ng
-        subplot(3,2,M1(imod,gr))
+        subplot(nmods,2,M1(imod,gr))
         %     subplot(2,2,M1(imod,gr))
-        
+%         subplot(nmods,2,M1(imod,gr))
         % Add parameters values
         if gr==1
             text(-.35, 0.5, modParams(model).summaryString ,'Units','normalized','FontSIze',8,...
@@ -444,7 +448,7 @@ for imod=1:nmods
         cse = cumsum(abs(ce));
         
         % Errors----------------------------------------------------------
-        subplot(2,2,M(1,gr))
+        subplot(nmods,2,M(1,gr))
         area(ce,'facecolor',modCols(imod,:),'facealpha',.5); hold on
         ylim([-.05 .05])
         if imod==1

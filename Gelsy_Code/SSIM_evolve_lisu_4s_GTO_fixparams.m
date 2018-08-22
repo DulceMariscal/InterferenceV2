@@ -1,4 +1,4 @@
-function [z, e, X, Xadd] = SSIM_evolve_lisu_3s(k, input , x0)
+function [z, e, X, Xadd] = SSIM_evolve_lisu_4s_GTO_fixparams(k, input , x0)
 %% Model with facilitation and interference not proportional to the error in the slow state
 % Possible future edits:
 %   1. Add the possibility of interference also in the fast state.
@@ -9,13 +9,18 @@ ntrials = length(input);
 
 % Parameters extraction
 kcell = num2cell(k);
-[af,bfet,bfint,aet,bet] = kcell{:};
-
- af=0.9442;
- bfet=0.6999;
+[af,bfet,as,bset,bsint,bfint,aet,bet] = kcell{:};
+% 
+ af=0.7442;
+ bfet=0.7758;
+ as=0.975;
+ bset=0.0401;
+ bsint=0.000245;
  bfint=0.6;
  aet=0.99999;
- bet=0.002377;
+ bet=0.003415;
+% ab=0.9747;
+% bb=0.02884;
 %Initializations
 z = zeros(1,ntrials);
 %xf = zeros(1,ntrials);
@@ -36,7 +41,7 @@ xne(1) = x0(3);
 for n=1:ntrials-1
     
     %% Motor output determination
-    z(n) = xfa(n) ;
+    z(n) = xfa(n) + xsa(n);
    % z(n) = xs(n) + xfa(n) + xsa(n);
     
     %% Error computation
@@ -51,11 +56,11 @@ for n=1:ntrials-1
     %% Activation of motor primitives for the next step
     if e(n)>0
         xfa(n+1) = af*xfa(n)  +  bfet*xpe(n)*em + bfint*xne(n)*em;
-       % xsa(n+1) = as*xsa(n)  +  bset*xpe(n)     +    bsint*xne(n) ;
+        xsa(n+1) = as*xsa(n)  +  bset*xpe(n)    + bsint*xne(n) ;
         
     else
         xfa(n+1) = af*xfa(n)  +  bfet*xne(n)*em + bfint*xne(n)*em;
-       % xsa(n+1) = as*xsa(n)  +  bset*xne(n)     +    bsint*xpe(n) ;
+        xsa(n+1) = as*xsa(n)  +  bset*xne(n)     +    bsint*xpe(n) ;
         
     end
     
@@ -66,15 +71,15 @@ for n=1:ntrials-1
     
     % 2. Learning %max adapted state is constrained
     if e(n)>0
-        xpe(n+1) = min([xpe(n+1) + bet*e(n), .3*1]);
+        xpe(n+1) = min([xpe(n+1) + bet*e(n), .3]);
     elseif e(n)<0
-        xne(n+1) = max([xne(n+1) + bet*e(n), .3*-1]);
+        xne(n+1) = max([xne(n+1) + bet*e(n), -.3]);
     else
     end
 end
-z(end) = xs(end)   +   xfa(end)  +  xsa(end)  ;
+z(end) =   xfa(end)  +  xsa(end)  ;
 e(end) = input(end) -   z(end);
 
-X = [xfa; xpe; xne];
+X = [xfa; xsa; xpe; xne];
 Xadd=[];
 end

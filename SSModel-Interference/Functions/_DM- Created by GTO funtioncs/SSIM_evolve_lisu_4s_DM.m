@@ -1,4 +1,4 @@
-function [z, e, X, Xadd] = SSIM_evolve_lisu_4s_DM_body(k, input , x0) 
+function [z, e, X, Xadd] = SSIM_evolve_lisu_4s_GTO(k, input , x0) 
 %% Model with facilitation and interference not proportional to the error in the slow state
 %Changes made to Alessandro's model
 %1. interference added to the fast state
@@ -13,7 +13,7 @@ ntrials = length(input);
 
 % Parameters extraction
 kcell = num2cell(k);
-[af,bfet,bfint,aet,bet,ab,bb] = kcell{:};
+[af,bfet,as,bset,bsint,bfint,aet,bet] = kcell{:};
 % bfint=0.04;
 %Initializations
 z = zeros(1,ntrials);
@@ -45,7 +45,7 @@ for n=1:ntrials-1
     %% States update
         %% Reactive components update
         %xf(n+1) = af*xf(n) + bf*e(n); % Error driven fast adaptation
-        xs(n+1) = ab*xs(n) + bb*e(n); % Error driven slow adaptation
+%         xs(n+1) = ab*xs(n) + bb*e(n); % Error driven slow adaptation
         
     %% Activation of motor primitives for the next step
 %     bfet=0.12;
@@ -53,15 +53,14 @@ for n=1:ntrials-1
     
         if e(n)>0
             xfa(n+1) = af*xfa(n)  +  bfet*xpe(n)*em  +    bfint*xne(n)*em    ;
-%             xsa(n+1) = as*xsa(n)  +  bset*xpe(n) + bsint*xne(n) ;
+            xsa(n+1) = as*xsa(n)  +  bset*xpe(n) + bsint*xne(n) ;
 %             xsa(n+1) = 0 ;
             
-        elseif e(n)<0
-            xfa(n+1) = af*xfa(n)  +  bfet*xne(n)*em +    bfint*xpe(n)*em ;
-%             xsa(n+1) = as*xsa(n)  +  bset*xne(n)   + bsint*xne(n)   ;
-%           xsa(n+1) = 0;
         else
-           xfa(n+1) = af*xfa(n);
+            xfa(n+1) = af*xfa(n)  +  bfet*xne(n)*em +    bfint*xpe(n)*em ;
+            xsa(n+1) = as*xsa(n)  +  bset*xne(n)   + bsint*xne(n)   ;
+%           xsa(n+1) = 0;
+           
         end
 
     %% Primitives update 
@@ -76,7 +75,7 @@ for n=1:ntrials-1
         elseif e(n)<0
             xne(n+1) = max([xne(n+1) + bet*e(n), -0.3]);
 %    xne(n+1) = max([xne(n+1) + bet*e(n)]);
-%         else
+        else
         end
 end
 % z(end) = xs(end)   +   xfa(end)  +  xsa(end)  ;

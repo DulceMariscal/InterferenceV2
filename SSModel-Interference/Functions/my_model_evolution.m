@@ -71,13 +71,13 @@ switch model
     case 30 
         [z, e, X] = SSIM_evolve_lisu_5s_DM(k, input , x0); %Linear summation interference in fast state
      case 31 
-        [z, e, X] = SSIM_evolve_lisu_4s_DM(k, input , x0); %Linear summation 4 states
+        [z, e, X] = SSIM_evolve_lisu_4s_GTO(k, input , x0); %Linear summation 4 states
     case 32 
         [z, e, X] = SSIM_evolve_lisu_3s(k, input , x0); %%Linear summation 3 states
     case 33
-        [z, e, X] = SSIM_evolve_lisu_4s(k, input , x0); %Linear summation 4 states no body 
+        [z, e, X] = SSIM_evolve_lisu_4s_GTO_fixparams(k, input , x0); %Linear summation 4 states no body 
      case 34 
-        [z, e, X] = SSIM_evolve_lisu_4s_body(k, input , x0); %Linear summation 4 states no slow
+        [z, e, X] = SSIM_evolve_lisu_4s_body_GTO_fixparams(k, input , x0); %Linear summation 4 states no slow
     case 35
         [z, e, X] = SSIM_evolve_lisu_4s_DMV2(k, input , x0); %Linear summation 4 states no body and fast interference 
     case 36 

@@ -1127,7 +1127,8 @@ cmod = 30;
 npars = 9;
 nstates = 5;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 5S - DM'; %Constant weighting in the slow state
+% modParams(cmod).name = 'SSIM - 5S - DM'; %Constant weighting in the slow state
+modParams(cmod).name = '5S_{DM}';
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
@@ -1168,8 +1169,8 @@ cmod = 31;
 npars = 8;
 nstates = 4;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 4S - DM'; %Constant weighting in the slow state
-modParams(cmod).npars = npars;
+% modParams(cmod).name = 'SSIM - 4S-GTO'; %Constant weighting in the slow state
+modParams(cmod).name = '4S-GTO';modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
 modParams(cmod).k0 = zeros(1,npars);
@@ -1216,7 +1217,7 @@ cmod = 32;
 npars = 5;
 nstates = 3;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 3S'; %Constant weighting in the slow state
+modParams(cmod).name = 'SSIM-3S'; %Constant weighting in the slow state
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
@@ -1256,7 +1257,8 @@ cmod = 33;
 npars = 8;
 nstates = 4;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 4S'; %Constant weighting in the slow state
+% modParams(cmod).name = 'SSIM - 4S_{GTO FIX parms}'; %Constant weighting in the slow state
+ modParams(cmod).name = '4S_{GTO FIX parms}'; 
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
@@ -1301,7 +1303,8 @@ cmod = 34;
 npars = 7;
 nstates = 4;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 4S-body'; %Constant weighting in the slow state
+% modParams(cmod).name = 'SSIM - 4S-body-GTO_{fixparams}'; %Constant weighting in the slow state
+modParams(cmod).name = '4SBody-GTO_{fix}';
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
@@ -1339,7 +1342,8 @@ cmod = 35;
 npars = 7;
 nstates = 4;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 4S - DMV2'; %Constant weighting in the slow state
+% modParams(cmod).name = 'SSIM - 4S - DMV2'; %Constant weighting in the slow state
+modParams(cmod).name = '4S-DMV2';
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);
@@ -1350,14 +1354,14 @@ modParams(cmod).klb = zeros(1,npars);
 modParams(cmod).Acond =[1 0 -1 0 0 0 0;... af<as
     0 0 1 0 0   -1  0;...  as<aet
     1 0 0 0 0  -1  0;... af<aet
-        0 0 0 -1 0 0 1;...  bset>bet
+%         0 0 0 -1 0 0 1;...  bset>bet
 %     0 -1 0 0 0 0 1;...  bfet>bet
 %     0 -1 0 1 0  0 0;...  bfet>bset
 %     0 0 0 -1 0 0 0 1;...  bset>bet
 %     0 -1 0 1 0 0 0 0;...  bfet>bset
    0 0 0 -1  0  0  1 ;...bsint>bet
 %     0 1 -1 0 0 0  0;...bet<bsfac
-    zeros(2,npars)];  
+    zeros(3,npars)];  
 modParams(cmod).bcond = zeros(npars,1);
 modParams(cmod).input = perturbations; %Group X Strides
 modParams(cmod).kmin = nan(1,npars);
@@ -1383,7 +1387,8 @@ cmod = 36;
 npars = 7;
 nstates = 4;
 ncoo = 1; %Number of coordinates
-modParams(cmod).name = 'SSIM - 4S-DMbody'; %Constant weighting in the slow state
+% modParams(cmod).name = 'SSIM - 4S-DMbody'; %Constant weighting in the slow state
+ modParams(cmod).name = '4S-DMbody';
 modParams(cmod).npars = npars;
 modParams(cmod).nstates = nstates;
 modParams(cmod).x0 = zeros(1,nstates);

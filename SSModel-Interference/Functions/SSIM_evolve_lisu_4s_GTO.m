@@ -1,4 +1,4 @@
-function [z, e, X, Xadd] = SSIM_evolve_lisu_4s_DM(k, input , x0) 
+function [z, e, X, Xadd] = SSIM_evolve_lisu_4s_GTO(k, input , x0) 
 %% Model with facilitation and interference not proportional to the error in the slow state
 %Changes made to Alessandro's model
 %1. interference added to the fast state

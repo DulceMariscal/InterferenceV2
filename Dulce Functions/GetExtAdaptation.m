@@ -1,6 +1,6 @@
 %Extend of Adaptation
 clear all;
-close all;
+% close all;
 clc
 cd('C:\Users\dum5\OneDrive - University of Pittsburgh\InterferenceStudy\Params Files\subjectsData')
 % load('velocityContributionNorm2AllData.mat')
@@ -15,8 +15,8 @@ cd('C:\Users\dum5\OneDrive - University of Pittsburgh\InterferenceStudy\Params F
 load('netContributionPNormV8ALL_nan.mat')
 load('velocityContributionPNormV8ALL_nan.mat')
 
-load('netContributionPNormV9_nan.mat')
-load('velocityContributionPNormV9_nan.mat')
+% load('netContributionPNormV9_nan.mat')
+% load('velocityContributionPNormV9_nan.mat')
 
 
 % load('velocityContributionPNormV9_median.mat')
@@ -28,7 +28,7 @@ load('NoRemovingAnyStridesV7_Model.mat')
 groups = 2;
 conditions = 2;
 % subs = [8 9];
-indSubs = {setdiff(1:10, []), setdiff(1:11, [])};
+indSubs = {setdiff(1:11, []), setdiff(1:13, [])};
 % indSubs = {setdiff(1:11,[]), setdiff(1:12, [])};
 subs = [length(indSubs{1}) , length(indSubs{2})];
 charGroups = {'INT','SAV'};
@@ -310,13 +310,30 @@ end
 % ExtAdaptINT=VelocityAVG_INT-NetAVG_INT;
 % ExtAdaptSAV=VelocityAVG_SAV-NetAVG_SAV;
 
+%%
+%Elimination discontuities due to rest 
 ExtAdaptAvg=[];
 % ExtAdaptAvg(1,:)=NetAVG_INT-VelocityAVG_INT;
 % ExtAdaptAvg(2,:)=NetAVG_SAV-VelocityAVG_SAV;
+stop1=1040:1092;
+stop2=1340:1366;
+ExtAdaptAvg_INT(stop1)=nan;
+ExtAdaptAvg_INT(stop2)=nan;
+gap1=1021:1120;
+gap2=1329:1369;
+DataToLinear=ExtAdaptAvg_INT(gap1);
+DataToLinear2=ExtAdaptAvg_INT(gap2);
+[~, dataFit] = my_exp_fit(DataToLinear,'Increasing','Line');
+[~, dataFit2] = my_exp_fit(DataToLinear2,'Increasing','Line');
+% [expFitPars, dataFit] = my_exp_fit(DataToLinear,'Decreasing','Single');
+ExtAdaptAvg_INT(stop1)=dataFit(stop1(1)-gap1(1):stop1(1)-gap1(1)+length(stop1)-1);
+ExtAdaptAvg_INT(stop2)=dataFit2(stop2(1)-gap2(1):stop2(1)-gap2(1)+length(stop2)-1);
 ExtAdaptAvg(1,:)=ExtAdaptAvg_INT;
 ExtAdaptAvg(2,:)=ExtAdaptAvg_SAV;
 
 
+
+%%
 strides_Sav=[150 600 1350 600 150];
 strides_Inter=[150 600 600 750 600 150];
 
@@ -339,16 +356,20 @@ sav_velo=[zeros(1,150)  -nanmean([AVG_Cond_SAV(4);AVG_Cond_INT(5)])*ones(1,600) 
 % ExtAdaptAvg(:,746:751)=[];
 % ExtAdaptAvg(:,2703:2706)=[];
 % ExtAdaptAvg(:,2703:2704)=[];
-% ExtAdaptAvg(:,146:161)=[];
+
+
 ExtAdaptSE(1,:)=ExtAdaptSE_INT;
 ExtAdaptSE(2,:)=ExtAdaptSE_SAV;
+
 % ExtAdaptSE(:,746:751)=[];
 % ExtAdaptSE(:,2703:2706)=[];
 % ExtAdaptSE(:,2703:2704)=[];
 
+ExtAdaptAvg(:,151:156)=[];
+ExtAdaptSE(:,151:156)=[];
+sav_velo(:,151:156)=[];
+Int_Velo(:,151:156)=[];
 
-% sav_velo(:,146:161)=[];
-% Int_Velo(:,146:161)=[];
 % ExtAdaptAvg(:,2305)=[];
 
 
@@ -398,7 +419,7 @@ basStd=nanstd(basStds);
 % save('ExtAdaptPNormAllData_FittingData','ExtAdaptSE','ExtAdaptAvg','ExtAdaptSAV','ExtAdaptINT','ExtAdaptAvg','VelocityAVG_INT','VelocityAVG_SAV','AVG_Velocity_Cond_SAV','AVG_Cond_INT')
 % save('ExtAdaptDataToFitV8ALLData','ExtAdaptSE','ExtAdaptAvg','ExtAdaptSAV','ExtAdaptINT','ExtAdaptAvg','VelocityAVG_INT','VelocityAVG_SAV','AVG_Velocity_Cond_SAV','AVG_Cond_INT')
 cd('C:\Users\dum5\OneDrive - University of Pittsburgh\InterferenceStudy\Params Files\DataModels')
-save('ExtAdapt_ToFitV9nan','adaptation','adaptations','perturbation','perturbations','basStds','basStd')
+save('ExtAdapt_V8ALL_nan','adaptation','adaptations','perturbation','perturbations','basStds','basStd')
 
 
 

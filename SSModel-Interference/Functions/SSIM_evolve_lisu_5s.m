@@ -39,7 +39,7 @@ for n=1:ntrials-1
     
     %% States update
         %% Reactive components update
-        %xf(n+1) = af*xf(n) + bf*e(n); % Error driven fast adaptation
+%         xf(n+1) = af*xf(n) + bf*e(n); % Error driven fast adaptation
         xs(n+1) = ab*xs(n) + bb*e(n); % Error driven slow adaptation
         
     %% Activation of motor primitives for the next step
