@@ -20,11 +20,11 @@ if NORMPERT==0
     %load([pathToData '\ExtAdaptPNormShif_A1_B_A2NormAll.mat'])
     %load([pathToData '\ExtAdaptShiftedDataToFitALL.mat'])
     %load([pathToData '\ExtAdaptShiftedREmovingStridesDataToFit.mat'])
-    %load([pathToData '\ExtAdaptShiftedDataToFit.mat'])clos
-    %load([pathToData '\DataForFitting.mat'])
-    %     load([pathToData '\ExtAdaptDataToFitV9.mat'])
-%     load([pathToData '\ExtAdaptDataToFitV8ALLDataCroppedV2.mat'])
-%        load([pathToData '\ExtAdapt_ToFitV9nan.mat'])
+%   load([pathToData '\ExtAdaptShiftedDataToFit.mat'])
+%   load([pathToData '\DataForFitting.mat'])
+%   load([pathToData '\ExtAdaptDataToFitV9.mat'])
+%   load([pathToData '\ExtAdaptDataToFitV8ALLDataCroppedV2.mat'])
+%   load([pathToData '\ExtAdapt_ToFitV9nan.mat'])
 load([pathToData '\ExtAdapt_V8ALL_nan.mat'])
     %load([pathToData '\ExtAdaptShiftedDataToFitv5.mat'])
 else

@@ -4,29 +4,54 @@ clear all
 close all
 clc
 
-pathToData= 'C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\subjectsData';
+% pathToData= 'C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\subjectsData';
 poster_colors;
 colorOrder=[p_red; p_orange; p_fade_green; p_fade_blue; p_plum; p_green; p_blue; p_fade_red; p_lime; p_yellow; [0 0 0]; [0.1 0.1 0.1];[0.2 0.2 0.2]; [0.3 0.3 0.3];[0.4 0.4 0.4]];
 
 
 
 
-load('ExtAdaptPNormAllDataV9.mat')
-% % load('StridesToRemovenetContributionPNormAllDataV7.mat')
-param={'ExtAdaptPNormV9'};
-% 
-slaI=ExtAdaptINT;
-slaS=ExtAdaptSAV;
+% load('ExtAdaptPNormAllDataV9.mat')
+% % % load('StridesToRemovenetContributionPNormAllDataV7.mat')
+% param={'ExtAdaptPNormV9'};
+% % 
+% slaI=ExtAdaptINT;
+% slaS=ExtAdaptSAV;
 
 % load('spatialContributionPNormAllSubjectsData.mat')
 % load('NoRemovingAnyStrides.mat')
 
-% load('netContributionPNormV9.mat')
-% % load('StridesToRemovenetContributionPNormAllDataV7.mat')
-% param={'netContributionPNormV9'};
+% load('netContributionPNormV9_nan.mat')
+
+% load('StridesToRemovenetContributionPNormAllDataV7.mat')
+% load('netContributionPNormV9ALL_badstridesRemoved.mat')
+
+%SML data analysis 
+% load('netContributionPNormV10.mat')
+% param={'netContributionPNormV10'};
 % gaitPar='netContributionPNorm';
 % slaI=netContributionPNormINT;
 % slaS=netContributionPNormSAV;
+
+%  load('ExtAdaptPNormV10.mat')
+%  param={'ExtAdaptPNormV10'};
+% slaI=ExtAdaptINT;
+% slaS=ExtAdaptSAV;
+
+%Data to address Bastian's commnet 
+% load('netContributionPNormV10_WO1stStride.mat')
+% param={'netContributionPNormV10_{WO1stStride}'};
+% gaitPar='netContributionPNorm';
+% slaI=netContributionPNormINT;
+% slaS=netContributionPNormSAV;
+
+
+load('ExtAdaptPNormV10_WO1stStride.mat')
+ param={'ExtAdaptPNormV10_{WO1stStride}'};
+slaI=ExtAdaptINT;
+slaS=ExtAdaptSAV
+
+
 
 
 % load('netContributionPNormV8_ALLmedian.mat')
@@ -43,13 +68,9 @@ slaS=ExtAdaptSAV;
 % slaI=spatialContributionPNormINT;
 % slaS=spatialContributionPNormSAV;
 
-
-
-
-
 groups = 2;
 charGroups = {'S','I'};
-indSubs = {setdiff(1:11, []), setdiff(1:10, [])};
+indSubs = {setdiff(1:10, []), setdiff(1:9, [])};
 %  indSubs = {setdiff(1:9, []), setdiff(1:8, [])};
 
 subs = {length(indSubs{1}) , length(indSubs{2})};
@@ -63,8 +84,8 @@ cond_Sav=[2,4,5,3];
 NumbStridesToMidPert=nan(15,4);
 MinPointAdaptCurve_Inter=nan(15,1);
 % MinPointAdaptCurve_Sav=nan(10,1);
-kk=11;
-ss=13;
+kk=9;
+ss=10;
 Tau_INT=nan(kk,2);
 Tau_SAV=nan(ss,2);
 STRIDES_1_INT=nan(kk,2);
@@ -86,14 +107,14 @@ for s=1:subs{2}
     %     sub=s;
     data_A1_Inter=slaI{sub,cond_Inter(1)};
     data_A1_Inter(any(isnan(data_A1_Inter), 2), :) = [];
-    if s==7
-        nos_to_mid_pert_InterA1=nan;
-        data_A1_Inter=nan(100,1);
-        
-    else
+%     if s==7
+%         nos_to_mid_pert_InterA1=nan;
+%         data_A1_Inter=nan(100,1);
+%         
+%     else
         
     [nos_to_mid_pert_InterA1,~, expFitPars_InterA1] = find_nstrides_to_mid_pert(data_A1_Inter(minNOSToRemove(sub,1):end,1),incrORdecr);
-    end
+%     end
     %     MinPointAdaptCurve_Inter(sub,1)=nanmin(data_A1_Inter(minNOSToRemove(sub,1):end,1));
     
     Tau_INT(sub,1)=expFitPars_InterA1(3);
@@ -111,12 +132,12 @@ for s=1:subs{2}
     STRIDES_SS_INT(sub,2)=nanmean(data_A2_Inter(end-40:end-5,1));
     
     data_A3_Inter=slaI{sub,cond_Inter(3)};
-        if sub==8 && strcmp(param,'stepLengthAsym') || sub==8 && strcmp(param,'ExtAdaptNorm2Shifted') || sub==8 && strcmp(param,'ExtAdaptNorm2')||...
-                sub==8 && strcmp(param,'ExtAdaptPNorm')|| sub==8 && strcmp(param,'ExtAdaptPNormShifted') || sub==8 && strcmp(param,'stepLengthAsymShifted')
-            Washout_5_INT(sub,1)=nanmean(data_A3_Inter(9:14,1));
-        else
+%         if sub==8 && strcmp(param,'stepLengthAsym') || sub==8 && strcmp(param,'ExtAdaptNorm2Shifted') || sub==8 && strcmp(param,'ExtAdaptNorm2')||...
+%                 sub==8 && strcmp(param,'ExtAdaptPNorm')|| sub==8 && strcmp(param,'ExtAdaptPNormShifted') || sub==8 && strcmp(param,'stepLengthAsymShifted')
+%             Washout_5_INT(sub,1)=nanmean(data_A3_Inter(9:14,1));
+%         else
     Washout_5_INT(sub,1)=nanmean(data_A3_Inter(1:5,1));
-        end
+%         end
     
         Washout_5_INT(sub,1)=nanmean(data_A3_Inter(1:5,1));
     
@@ -159,13 +180,13 @@ for s=1:subs{1}
     
     
     data_A3_Sav=slaS{sub,cond_Sav(3)};
-    if s==5 || s==9
-    Washout_5_SAV(sub,1)=nan;
-    Washout_ALL_SAV(sub,1)=nan;
-    else
+%     if s==5 || s==9
+%     Washout_5_SAV(sub,1)=nan;
+%     Washout_ALL_SAV(sub,1)=nan;
+%     else
     Washout_5_SAV(sub,1)=nanmean(data_A3_Sav(1:5,1));
     Washout_ALL_SAV(sub,1)=nanmean(data_A3_Sav(1:end-5,1));
-    end
+%     end
     NumbStridesToMidPert(sub,3:4)=[nos_to_mid_pert_A1_Sa nos_to_mid_pert_A2_Sa];
     
     %conditon between A1 and second A1 
@@ -260,21 +281,26 @@ title([param; 't-test p-value=' num2str(p)])
 cond=6;
 g=0;
 a=figure ;
+set(gcf,'color','w');
 subplot(2,2,1)
+
+% 
 % netContributionPNormAvg(:,746:751)=[];
 % netContributionPNormAvg(:,2690:2695)=[];
 % netContributionPNormAvg(:,2703:2704)=[];
-% netContributionPNormAvg(:,146:161)=[];
+% 
+% 
+% % SE=ExtAdaptSE;
+% 
+% SE(:,746:751)=[];
+% SE(:,2690:2695)=[];
+% SE(:,2703:2704)=[];
 
-SE=ExtAdaptSE;
+% 
 
-SE(:,746:751)=[];
-SE(:,2690:2695)=[];
-SE(:,2703:2704)=[];
-
-ExtAdaptAvg(:,746:751)=[];
-ExtAdaptAvg(:,2690:2695)=[];
-ExtAdaptAvg(:,2703:2704)=[];
+% ExtAdaptAvg(:,746:751)=[];
+% ExtAdaptAvg(:,2690:2695)=[];
+% ExtAdaptAvg(:,2703:2704)=[];
 
 % netContributionPNormAvg(:,146:161)=[];
 
@@ -285,7 +311,7 @@ ExtAdaptAvg(:,2703:2704)=[];
 % plot(1:length(ExtAdaptAvg(2,:)),ExtAdaptAvg(2,:),'o','markerfacecolor','b','markerEdgeColor','k','Markersize',10, 'LineWidth',.1)
 
 % [marker,patch]=boundedline(1:length(netContributionPNormAvg(1,:)), netContributionPNormAvg(1,:),SE(1,:),'or','alpha',1:length(netContributionPNormAvg(2,:)), netContributionPNormAvg(2,:),SE(2,:),'ob');
-[marker,patch]=boundedline(1:length(ExtAdaptAvg(1,:)), ExtAdaptAvg(1,:),SE(1,:),'or','alpha',1:length(ExtAdaptAvg(2,:)), ExtAdaptAvg(2,:),SE(2,:),'ob');
+[marker,patch]=boundedline(1:length(ExtAdaptAvg(1,:)), ExtAdaptAvg(1,:),ExtAdaptSE(1,:),'or','alpha',1:length(ExtAdaptAvg(2,:)), ExtAdaptAvg(2,:),ExtAdaptSE(2,:),'ob');
 
 set(marker(1),'MarkerFaceColor','r','MarkerEdgeColor','k')
 set(marker(2),'MarkerFaceColor','b','MarkerEdgeColor','k')
@@ -321,6 +347,8 @@ end
 set(gca,'Xtick',g+.5,'XTickLabel',{'Early_{A1}' 'SS_{A1}','Late tied','Early_{A2}', 'SS_{A2}', 'Washout'},'fontSize',12)
 legend('Interference','Savings')
 % ylabel(param{1})
+
+
 %%
 %Number of strides to mid perturation
 % Bar plots
@@ -353,9 +381,11 @@ ylabel('NumbStridesToMidPert')
 title(param)
 set(gca,'Xtick',[1.5 4.5],'XTickLabel',{'A1' 'A2'},'fontSize',12)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODES STOPS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
+return
 
 
 %%

@@ -9,8 +9,8 @@ conditions = 2;
 % subs = [8 9];
 
 % indSubs = {setdiff(3:12, 8), setdiff(1:13   , [2 5 9 10])};
-% indSubs = {setdiff(1:12, [2 8]), setdiff(1:14   , [5 9 10])};
-indSubs = {setdiff(1:12, [2]), setdiff(1:14   , [10])};
+indSubs = {setdiff(2:12, [2 8]), setdiff(1:14   , [5 9 10 12])};
+% indSubs = {setdiff(1:12, [2]), setdiff(1:14   , [10])};
 subs = [length(indSubs{1})  length(indSubs{2})];
 charGroups = {'I','S'};
 % params={'spatialContributionNorm2','stepTimeContributionNorm2',clc'velocityContributionNorm2','stepLengthAsym'};
@@ -33,7 +33,9 @@ eval([gaitPar 'SAV =cell(subs(2), nconds(SAV));']); %DUL
 eval([gaitPar 'INT =cell(subs(1), nconds(INT));']);
 
 % gaitPar.Sav= cell(subs(1), nconds(INT));
-stridesPerCond = {[150 600 600 750 600 150], [150 600 1350 600 150]};
+% stridesPerCond = {[150 600 600 750 600 150], [150 600 1350 600 150]};
+%  stridesPerCond = {[150 455 600 750 600 150], [147 599 1095 600 150]}; %  %For super imposition with labtol 
+stridesPerCond = {[145 595 595 745 595 145], [145 595 1340 595 145]}; %removing last 5 strides per condition 
 slam = nan(groups, subs(2), sum(stridesPerCond{1}) ) ; %Each element is a matrix
 
 indMatS = zeros(nconds(SAV),2); %Start and stop of each condition
@@ -56,8 +58,10 @@ for gr = 1:groups
         %             end
         %             [adaptData]=adaptData.removeBias(baseline_cond);
         
-%         [adaptData]=adaptData.removeBadStrides.removeBias;
- [adaptData]=adaptData.removeBias;
+%        [adaptData]=adaptData.removeBadStrides.removeBias;
+  [adaptData]=removeBadStrides(adaptData,1);
+  [adaptData]=adaptData.removeBias;
+  
         %         end
         
         %% Get all conditions' names
@@ -92,8 +96,8 @@ for gr = 1:groups
                 cc= nan(600,1);
             else
                 cc = adaptData.getParamInCond(gaitPar, conditions{cond});
-                badstrides=adaptData.getParamInCond({'bad'}, conditions{cond});
-                badstrides=find(badstrides==1);
+%                 badstrides=adaptData.getParamInCond({'bad'}, conditions{cond});
+%                 badstrides=find(badstrides==1);
                 
                 
                 
@@ -107,14 +111,17 @@ for gr = 1:groups
                     ' has been discarded because it contains more than 50% of nans ']);
             else
                 %% Filter
-                cc = medfilt1(cc,wSize);
+%                 cc(badstrides)=nan;
+%                 cc = medfilt1(cc,wSize);
+                cc=cc(2:end); 
+                cc = medfilt1(cc,wSize,'truncate','omitnan'); %Pablo 9/13/18
                 firstSamples = cc(1:wSize-1);
 %                 cc= movmedian(cc,wSize);
-                cc(badstrides)=nan;
-%                 cc = tsmovavg(cc,'s',wSize,1);
+%                 cc(badstrides)=nan;
+%                cc = movavg(cc,'linear',wSize);
 %                 cc= movmean(cc,wSize,'omitnan');
                 cc(1:wSize-1) = firstSamples;
-                cc(badstrides)=nan;
+                
                    
             end
             
@@ -157,14 +164,17 @@ end
 % save([gaitPar 'AllData'],[gaitPar 'SAV'],[gaitPar 'INT'] )
 
 %%
-eval([gaitPar 'Avg' '= squeeze(nanmean(slam,2));']) %Average across subjects
-
+% eval([gaitPar 'Avg' '= squeeze(nanmean(slam,2));']) %Average across subjects
+%PABLO changed on 9/13:
+eval([gaitPar 'Avg(1,:)' '= squeeze(mean(slam(1,1:subs(1),:)));']) %Average across subjects
+eval([gaitPar 'Avg(2,:)' '= squeeze(mean(slam(2,1:subs(2),:)));']) %Average across subjects
 % indA1 = [151:151+599];
 % [deltaSla] = findDeltaSla(slamavg(:,indA1));
 
 slamse  = nanse(slam,2);
 SE=slamse;
-x=1:2850;
+x=1:2820;
+% x=1:(2705);
 
 %% Plot averages
 % figure
@@ -173,22 +183,25 @@ x=1:2850;
 % plot(mI)
 % hold on
 figure
-% h = boundedline(x,slamavg(INT,:),slamse(INT,:),'r',x,slamavg(SAV,:),slamse(SAV,:),'b');
+% % h = boundedline(x,slamavg(INT,:),slamse(INT,:),'r',x,slamavg(SAV,:),slamse(SAV,:),'b');
 h = boundedline(x,eval([gaitPar 'Avg(INT,:)']),slamse(INT,:),'or',x,eval([gaitPar 'Avg(SAV,:)']),slamse(SAV,:),'ob');
-hold on
-plot([0 3000],[0 0], 'k')
-hold off
+% hold on
+% plot([0 3000],[0 0], 'k')
+% hold off
 figure
 % plot(x,eval([gaitPar 'Avg(INT,:)']))
 hold on
-scatter(x,eval([gaitPar 'Avg(INT,:)']))
-scatter(x,eval([gaitPar 'Avg(SAV,:)']))
-title('Whole Exp Adaptation Median')
+% scatter(x,eval([gaitPar 'Avg(INT,:)']))
+% scatter(x,eval([gaitPar 'Avg(SAV,:)']))
+% 
+% figure
+plot(x,eval([gaitPar 'Avg(INT,:)']),'or',x,eval([gaitPar 'Avg(SAV,:)']),'ob')
+title('Whole Exp Adaptation Mean')
 legend(h, 'Interference','Savings')
 ylabel(gaitPar)
 axis tight
 grid
-% save([gaitPar 'V8ALL_nan'],[gaitPar 'SAV'],[gaitPar 'INT'], [gaitPar 'Avg'],'SE' )
+save([gaitPar 'V10_WO1stStride'],[gaitPar 'SAV'],[gaitPar 'INT'], [gaitPar 'Avg'],'SE' )
 %% Contrast normalization VS no normalization
 % Since interference people seem to be more perturbed during A1,
 % I am assuming that they are generally more perturbed than savings people

@@ -1,5 +1,5 @@
 %To shift the data
-cd('C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\subjectsData')
+% cd('C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\subjectsData')
 
 clc
 % close all
@@ -27,8 +27,9 @@ clear all
 % % load('StridesToRemoveExtAdpat.mat')
 % param={'ExtAdaptNorm2'};
 
-load('netContributionPNormAllDataV8_ALL.mat')
-param={'netContributionPNormAllDataV8_ALL'};
+% load('netContributionPNormAllDataV8_ALL.mat')
+param={'netContributionPNormAllDataV8_ALLnan'};
+load('netContributionPNormV8ALL_nan.mat')
 slaI=netContributionPNormINT;
 slaS=netContributionPNormSAV;
 
@@ -155,7 +156,7 @@ for cond=1:length(cond_Inter)
             if i==1
             data_A2_Inter=[data_A2_Inter; nan(150,1)];  
             end
-            %         INTERFERENCE_DATA{2,i}(1:length(data_A2_Inter(minNOSToRemove(i,1):stridesInt(2)-5)))=(data_A2_Inter(minNOSToRemove(s,1):stridesInt(2)-5,1)-MinValAdapt)./MaxValAdapt;
+%               INTERFERENCE_DATA{2,i}(1:length(data_A2_Inter(minNOSToRemove(i,1):stridesInt(2)-5)))=(data_A2_Inter(minNOSToRemove(s,1):stridesInt(2)-5,1)-MinValAdapt)./MaxValAdapt;
             INTERFERENCE_DATA{2,i}(1:length(data_A2_Inter(minNOSToRemove(i,1):stridesInt(2)-5)))=(data_A2_Inter(minNOSToRemove(s,1):stridesInt(2)-5,1))./MaxValAdapt;
             
         end
@@ -349,8 +350,8 @@ basStd=nanstd(basStds);
 % plot(1:length(SLA_SAV_shifted),SLA_SAV_shifted,1:length(SLA_SAV_shifted),SLA_SAV_STDshifted)
 
 
-cd('C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\DataModels')
-save('ExtAdaptDataToFitV8_ALLShifted','adaptation','adaptations','perturbation','perturbations','basStds','basStd')
+% cd('C:\Users\dum5\OneDrive\_Shared Drive - Interference Project - Alessandro - Dulce_\Params Files\DataModels')
+% save('ExtAdaptDataToFitV8_ALLShifted','adaptation','adaptations','perturbation','perturbations','basStds','basStd')
 
 
 
